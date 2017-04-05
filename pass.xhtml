@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="css/BOEAccessTest.css" />
+	<title>BOE Access Test</title>	
+</h:head> 
+<h:body>
+	
+<!-- 	<section> -->
+<!-- 		<header> -->
+<!-- 			<ui:insert name="header" > -->
+<!-- 		  		<ui:include src="reusableWebPageParts/commonHeader.xhtml" /> -->
+<!-- 			</ui:insert>		 -->
+<!-- 		</header> -->
+<!-- 	</section> -->
+	<main>
+		<div id="certificateDiv">
+			
+			<img src="images/CertificateofAchievement.jpg" alt="certificate of achievement" />
+			<h2 id="userNameOverlayOnCertificate">#{userEntry.userNamePreserved}</h2>
+<!-- 			<h3>Your exam results met or exceeded the passing grade of 80% correct.</h3> -->
+			<h6 id="dateOverlayOnCertificate">#{userEntry.todayDate}</h6>
+		</div>
+		<h4>
+				Congratulations. You have passed the exam. <abbr title="Enterprise Reporting">ER</abbr> staff will now create your <abbr title="Business Objects Enterprise">BOE</abbr> logon. 
+				The logon information will be emailed to you within two (2) business days.
+			</h4>
+			<p>You should receive a copy of an email within a few minutes that indicates to <abbr title="Enterprise Reporting">ER</abbr> staff that you have passed the exam. 
+				If you do not receive the email, it's likely that the email you provided (#{userEntry.userEmailPreserved}) has an error. It is recommended that you print 
+				this confirmation page as record of your passing.
+				 </p>
+		<button onclick="printPage()">Print this page for your records</button>
+		<script>
+		function printPage() {
+		    window.print();
+		}
+		</script>
+	</main>
+	<section>
+		<ui:insert name="footer" >
+			<ui:include src="reusableWebPageParts/commonFooter.xhtml" />
+		</ui:insert>
+	</section>
+</h:body> 
+</html>

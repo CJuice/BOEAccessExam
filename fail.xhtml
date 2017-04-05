@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="css/BOEAccessTest.css" />
+	<title>BOE Access Test</title>	
+</h:head> 
+<body> 
+
+	<section>
+		<header>
+			<ui:insert name="header" >
+		  		<ui:include src="reusableWebPageParts/commonHeader.xhtml" />
+			</ui:insert>		
+		</header>
+	</section>
+	<main>
+		<h2>Thank you for taking the exam.</h2>
+		<h3>Your exam results did not meet or exceed the passing grade of 80% correct. Please retake the exam.</h3>
+		<a href="index.xhtml" class="linkLikeButton">Retake the Exam</a>
+	</main>
+	<section>
+		<ui:insert name="footer" >
+			<ui:include src="reusableWebPageParts/commonFooter.xhtml" />
+		</ui:insert>
+	</section>
+</body> 
+</html>
