@@ -4,16 +4,18 @@ head {
 body {
 	font-family: "Lucida Bright";
 }
-.notesToMe {
-	color: red;
-}
+/* .notesToMe { */
+/* 	color: red; */
+/* } */
 .titleBar {
 	text-align: center;
 	background-color: #99b3e6;
 }
 #tinyVersionStamp{
-	font-size: .5em;
+/* 	font-size: .5em; */
+	color: #282828;
 	margin-bottom: -2em;
+	text-align: center;
 }
 #userInfoGridDiv {
 	border: .05em solid #ffcccc;
@@ -21,7 +23,7 @@ body {
 	display: inline-block;
 }
 .greyText {
-	color: grey;
+	color: #282828;
 }
 .strongText {
 	font-weight: bold;
@@ -29,11 +31,14 @@ body {
 .error {
 	color: red;
 }
+#startOfExam {
+	padding-top: 0.7em;
+}
 aside {
 	display: inline-block;
 	float: right;
 	font-size: .8em;
-	color: grey;
+	color: #282828;
 }
 fieldset {
 /* 	border: .1em solid #; */
@@ -48,9 +53,9 @@ table {
 /* 	border: 1px solid green; */
 	padding: 1.5em;
 }
-.questionAnswersTable {
-	width: 85%;
-}
+/* .questionAnswersTable { */
+/* 	width: 85%; */
+/* } */
 /* #submitButton { */
 /* 	font-size: 1.6em; */
 /* 	font-weight: strong; */
@@ -68,12 +73,12 @@ table {
 .QuestionText {
 	font-weight: bold;
 }
-.AnswerText {
-	padding-left: 2em;
-}
-.answerBoolean {
-	color: grey;
-}
+/* .AnswerText { */
+/* 	padding-left: 2em; */
+/* } */
+/* .answerBoolean { */
+/* 	color: grey; */
+/* } */
 .linkLikeButton{
 	text-align: center;
 	text-decoration: none;

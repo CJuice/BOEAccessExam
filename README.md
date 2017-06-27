@@ -1,2 +1,3 @@
 # BOEAccessExam
 Java Web App designed for my team to replace a paper test being used with an automated service. The exam has four parts, each with randomized questions, each with randomized answers. When a user gets a passing grade an email is sent to a staff member who creates a new account for the user, and a certificate is shown to the user for their records.
+20170627 Revisions to the questions and answers, per stakeholders request. Revised organization of the index.xhtml page organization and standardization of language to use "exam" rather than "test" or "quiz". Renamed variables/parameters/methods/classes in code to remove reference to "test" as this could be confused with a temporary testing feature. The word "exam" is used instead because it's more clear.

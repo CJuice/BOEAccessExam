@@ -6,9 +6,9 @@ import java.time.LocalDate;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-@ManagedBean(name="testBean")
+@ManagedBean(name="examBean")
 @ViewScoped
-public class TestBackingBean implements Serializable {
+public class ExamBackingBean implements Serializable {
 	/**
 	 * This class is the backing bean to the exam webform, upon initial load.
 	 * 
@@ -25,15 +25,15 @@ public class TestBackingBean implements Serializable {
 	private String userEmail = "@tceq.texas.gov";
 	private String userEmailLabel = "Email: ";
 	private LocalDate today;
-	private TestParts testParts;
+	private ExamParts examParts;
 	
 	//NO ARG CONSTRUCTOR FOR BEAN
 	/**
-	 * Instantiates TestParts and builds the collection of exam Parts
+	 * Instantiates ExamParts and builds the collection of exam Parts
 	 */
-	public TestBackingBean() {
+	public ExamBackingBean() {
 		this.today = LocalDate.now();
-		this.testParts = new TestParts();
+		this.examParts = new ExamParts();
 	}
 	
 	//METHODS
@@ -75,12 +75,12 @@ public class TestBackingBean implements Serializable {
 		this.today = today;
 	}
 		
-	public TestParts getTestParts() {
-		return testParts;
+	public ExamParts getExamParts() {
+		return examParts;
 	}
 
-	public void setTestParts(TestParts testParts) {
-		this.testParts = testParts;
+	public void setExamParts(ExamParts examParts) {
+		this.examParts = examParts;
 	}
 	
 	public static long getSerialversionuid() {
@@ -101,11 +101,11 @@ public class TestBackingBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TestBackingBean [dateLabel=" + dateLabel + ", userName="
+		return "ExamBackingBean [dateLabel=" + dateLabel + ", userName="
 				+ userName + ", userNameLabel=" + userNameLabel
 				+ ", userEmail=" + userEmail + ", userEmailLabel="
-				+ userEmailLabel + ", today=" + today + ", testParts="
-				+ testParts + "]";
+				+ userEmailLabel + ", today=" + today + ", examParts="
+				+ examParts + "]";
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class TestBackingBean implements Serializable {
 		result = prime * result
 				+ ((dateLabel == null) ? 0 : dateLabel.hashCode());
 		result = prime * result
-				+ ((testParts == null) ? 0 : testParts.hashCode());
+				+ ((examParts == null) ? 0 : examParts.hashCode());
 		result = prime * result + ((today == null) ? 0 : today.hashCode());
 		result = prime * result
 				+ ((userEmail == null) ? 0 : userEmail.hashCode());
@@ -136,16 +136,16 @@ public class TestBackingBean implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TestBackingBean other = (TestBackingBean) obj;
+		ExamBackingBean other = (ExamBackingBean) obj;
 		if (dateLabel == null) {
 			if (other.dateLabel != null)
 				return false;
 		} else if (!dateLabel.equals(other.dateLabel))
 			return false;
-		if (testParts == null) {
-			if (other.testParts != null)
+		if (examParts == null) {
+			if (other.examParts != null)
 				return false;
-		} else if (!testParts.equals(other.testParts))
+		} else if (!examParts.equals(other.examParts))
 			return false;
 		if (today == null) {
 			if (other.today != null)

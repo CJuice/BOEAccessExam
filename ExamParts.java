@@ -3,29 +3,29 @@ package gov.texas.tceq.BOEAccessTest;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TestParts implements Serializable {
+public class ExamParts implements Serializable {
 	/**
-	 * This class creates the test that is instantiated from the TestBackingBean and loaded in the index.xhtml
+	 * This class creates the exam that is instantiated from the ExamBackingBean and loaded in the index.xhtml
 	 * @author CSchaefe
 	 * @since 1.8
 	 */
 	
 	//STATE
 	private static final long serialVersionUID = 1L;	
-	private static final int NUMBER_OF_TEST_PARTS = 4;
-	private static final int NUMBER_OF_QUESTIONS_PART_1 = 4;
+	private static final int NUMBER_OF_QUESTIONS_PART_1 = 3;
 	private static final int NUMBER_OF_QUESTIONS_PART_2 = 4;
-	private static final int NUMBER_OF_QUESTIONS_PART_3 = 2;
+	private static final int NUMBER_OF_QUESTIONS_PART_3 = 4;
 	private static final int NUMBER_OF_QUESTIONS_PART_4 = 1;
 	private static final int[] PART_QUESTION_COUNT = {NUMBER_OF_QUESTIONS_PART_1, NUMBER_OF_QUESTIONS_PART_2, NUMBER_OF_QUESTIONS_PART_3, NUMBER_OF_QUESTIONS_PART_4};
+	private static final int NUMBER_OF_EXAM_PARTS = PART_QUESTION_COUNT.length;
 	private ArrayList<Part> examPartsArrayList = new ArrayList<>();
 	
 	//NO ARG CONSTRUCTOR FOR BEAN
 	/**
 	 * default no-arg constructor. builds an arrayList of exam Parts that together make up the whole exam
 	 */
-	public TestParts() {
-		for (int i = 1; i <= NUMBER_OF_TEST_PARTS; i++) {
+	public ExamParts() {
+		for (int i = 1; i <= NUMBER_OF_EXAM_PARTS; i++) {
 			Part part = new Part(i, PART_QUESTION_COUNT[i-1]);
 			this.examPartsArrayList.add(part);
 		}
@@ -34,8 +34,8 @@ public class TestParts implements Serializable {
 	//METHODS
 	
 	//GETTERS & SETTERS
-	public static int getNumberOfTestParts() {
-		return NUMBER_OF_TEST_PARTS;
+	public static int getNumberOfExamParts() {
+		return NUMBER_OF_EXAM_PARTS;
 	}
 
 	public static int getNumberOfQuestionsPart1() {
@@ -70,7 +70,7 @@ public class TestParts implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TestParts [examPartsArrayList=" + examPartsArrayList + "]";
+		return "ExamParts [examPartsArrayList=" + examPartsArrayList + "]";
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class TestParts implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TestParts other = (TestParts) obj;
+		ExamParts other = (ExamParts) obj;
 		if (examPartsArrayList == null) {
 			if (other.examPartsArrayList != null)
 				return false;

@@ -17,16 +17,16 @@ import javax.faces.bean.RequestScoped;
 public class UserEntryBackingBean implements Serializable {
 	/**
 	 * This class handles the users form/exam entries.
-	 * It stores the exam results, but not the username and email (see TestBackingBean) directly from the web form.
-	 * It contains a method that checks the users test results, determines if they have passed or failed.
+	 * It stores the exam results, but not the username and email (see ExamBackingBean) directly from the web form.
+	 * It contains a method that checks the users exam results, determines if they have passed or failed.
 	 * It sends an email to the ERGIS staff if PASS. Independent of results it routes user to next xhtml page after they hit submit.
-	 * It depends on the injection of the TestBackingBean instance
+	 * It depends on the injection of the ExamBackingBean instance.
 	 * @author CSchaefe
 	 * @since 1.8
 	 *
 	 */
-	@ManagedProperty (value="#{testBean}")
-	private TestBackingBean testBean;
+	@ManagedProperty (value="#{examBean}")
+	private ExamBackingBean examBean;
 	
 	//STATE
 	boolean doLogging = false;
@@ -34,11 +34,11 @@ public class UserEntryBackingBean implements Serializable {
 	private String userNamePreserved;
 	private LocalDate todayDate;
 	private static final long serialVersionUID = 1L;
-	/*Note: assumes there are four parts. would need to revise the number of these if TestParts.getNumberOfTestParts() != 4*/
-	private String[][] testDoubleArrayForAnswersPartI = new String[TestParts.getNumberOfQuestionsPart1()][];
-	private String[][] testDoubleArrayForAnswersPartII = new String[TestParts.getNumberOfQuestionsPart2()][];
-	private String[][] testDoubleArrayForAnswersPartIII = new String[TestParts.getNumberOfQuestionsPart3()][];
-	private String[][] testDoubleArrayForAnswersPartIV = new String[TestParts.getNumberOfQuestionsPart4()][];
+	/*Note: assumes there are four parts. would need to revise the number of these if ExamParts.getNumberOfExamParts() != 4*/
+	private String[][] examDoubleArrayForAnswersPartI = new String[ExamParts.getNumberOfQuestionsPart1()][];
+	private String[][] examDoubleArrayForAnswersPartII = new String[ExamParts.getNumberOfQuestionsPart2()][];
+	private String[][] examDoubleArrayForAnswersPartIII = new String[ExamParts.getNumberOfQuestionsPart3()][];
+	private String[][] examDoubleArrayForAnswersPartIV = new String[ExamParts.getNumberOfQuestionsPart4()][];
 
 	//No-Arg Constructor
 	/**
@@ -63,24 +63,25 @@ public class UserEntryBackingBean implements Serializable {
 		float totalPossibleNumberOfQuestions = 0;
 		String myPattern = ">.*<";
 		Pattern pattern = Pattern.compile(myPattern);
-		String[] emailRecipients = {"conrad.schaefer@tceq.texas.gov", testBean.getUserEmail()};
-		String emailBodyContent = testBean.getUserName() + " ( " + testBean.getUserEmail() + " )" + " passed the BOE Access Test.";
-		//grab username and email from testBean. Because is viewscope the data is only good for the index jsf, not the pass jsf page.
-		this.userEmailPreserved = testBean.getUserEmail().toUpperCase();
-		this.userNamePreserved = testBean.getUserName().toUpperCase();
+		String[] emailRecipients = {"BOEXI@tceq.texas.gov", examBean.getUserEmail()};
+		String emailBodyContent = "BOE Access Exam PASS: " + examBean.getUserName() + " ( " + examBean.getUserEmail() + " )";
+		
+		//Grab the username and email from examBean. Because the bean is viewscope the data is only good for the "index.xhtml" jsf, not the "pass.xhtml" jsf page.
+		this.userEmailPreserved = examBean.getUserEmail().toUpperCase();
+		this.userNamePreserved = examBean.getUserName().toUpperCase();
 
 		//Build list of user answers that can be iterated over by index.
 		ArrayList<String[][]> allUserAnswersInArrayList = new ArrayList<>();
-		allUserAnswersInArrayList.add(0, this.testDoubleArrayForAnswersPartI);
-		allUserAnswersInArrayList.add(1, this.testDoubleArrayForAnswersPartII);
-		allUserAnswersInArrayList.add(2, this.testDoubleArrayForAnswersPartIII);
-		allUserAnswersInArrayList.add(3, this.testDoubleArrayForAnswersPartIV);
+		allUserAnswersInArrayList.add(0, this.examDoubleArrayForAnswersPartI);
+		allUserAnswersInArrayList.add(1, this.examDoubleArrayForAnswersPartII);
+		allUserAnswersInArrayList.add(2, this.examDoubleArrayForAnswersPartIII);
+		allUserAnswersInArrayList.add(3, this.examDoubleArrayForAnswersPartIV);
 		
 		//increment through the parts (4 at the time of design)
-		for(int i = 0; i < TestParts.getNumberOfTestParts(); i++){
+		for(int i = 0; i < ExamParts.getNumberOfExamParts(); i++){
 			
-			//Get the Part of interest from the testbean in order to grab the true answers
-			Part partOfInterest = this.testBean.getTestParts().getExamPartsArrayList().get(i);
+			//Get the Part of interest from the examBean in order to grab the true answers
+			Part partOfInterest = this.examBean.getExamParts().getExamPartsArrayList().get(i);
 			
 			//Grab the exams correct answers for the Part and store them for comparison against users entries.
 			ArrayList<String> trueAnswersForExam = partOfInterest.getTrueAnswersArrayList();
@@ -151,9 +152,9 @@ public class UserEntryBackingBean implements Serializable {
 		
 		float grade = userScoreOfCorrectlyAnsweredQuestions / totalPossibleNumberOfQuestions;
 		if(grade >= 0.8){
-//			EmailNoticeOfPass.sendEmail(testBean.getUserEmail(), testBean.getUserName());
+//			EmailNoticeOfPass.sendEmail(examBean.getUserEmail(), examBean.getUserName());
 			Mailer mailer = new Mailer();
-			mailer.sendEMail(testBean.getUserName(), emailRecipients, emailBodyContent);
+			mailer.sendEMail(examBean.getUserName(), emailRecipients, emailBodyContent);
 			return "pass";
 		}
 		else{
@@ -162,48 +163,48 @@ public class UserEntryBackingBean implements Serializable {
 	}
 	
 	//GETTERS AND SETTERS
-	public String[][] getTestDoubleArrayForAnswersPartI() {
-		return testDoubleArrayForAnswersPartI;
+	public String[][] getExamDoubleArrayForAnswersPartI() {
+		return examDoubleArrayForAnswersPartI;
 	}
 
-	public void setTestDoubleArrayForAnswersPartI(
-			String[][] testDoubleArrayForAnswersPartI) {
-		this.testDoubleArrayForAnswersPartI = testDoubleArrayForAnswersPartI;
+	public void setExamDoubleArrayForAnswersPartI(
+			String[][] examDoubleArrayForAnswersPartI) {
+		this.examDoubleArrayForAnswersPartI = examDoubleArrayForAnswersPartI;
 	}
 
-	public String[][] getTestDoubleArrayForAnswersPartII() {
-		return testDoubleArrayForAnswersPartII;
+	public String[][] getExamDoubleArrayForAnswersPartII() {
+		return examDoubleArrayForAnswersPartII;
 	}
 
-	public void setTestDoubleArrayForAnswersPartII(
-			String[][] testDoubleArrayForAnswersPartII) {
-		this.testDoubleArrayForAnswersPartII = testDoubleArrayForAnswersPartII;
+	public void setExamDoubleArrayForAnswersPartII(
+			String[][] examDoubleArrayForAnswersPartII) {
+		this.examDoubleArrayForAnswersPartII = examDoubleArrayForAnswersPartII;
 	}
 
-	public String[][] getTestDoubleArrayForAnswersPartIII() {
-		return testDoubleArrayForAnswersPartIII;
+	public String[][] getExamDoubleArrayForAnswersPartIII() {
+		return examDoubleArrayForAnswersPartIII;
 	}
 
-	public void setTestDoubleArrayForAnswersPartIII(
-			String[][] testDoubleArrayForAnswersPartIII) {
-		this.testDoubleArrayForAnswersPartIII = testDoubleArrayForAnswersPartIII;
+	public void setExamDoubleArrayForAnswersPartIII(
+			String[][] examDoubleArrayForAnswersPartIII) {
+		this.examDoubleArrayForAnswersPartIII = examDoubleArrayForAnswersPartIII;
 	}
 
-	public String[][] getTestDoubleArrayForAnswersPartIV() {
-		return testDoubleArrayForAnswersPartIV;
+	public String[][] getExamDoubleArrayForAnswersPartIV() {
+		return examDoubleArrayForAnswersPartIV;
 	}
 
-	public void setTestDoubleArrayForAnswersPartIV(
-			String[][] testDoubleArrayForAnswersPartIV) {
-		this.testDoubleArrayForAnswersPartIV = testDoubleArrayForAnswersPartIV;
+	public void setExamDoubleArrayForAnswersPartIV(
+			String[][] examDoubleArrayForAnswersPartIV) {
+		this.examDoubleArrayForAnswersPartIV = examDoubleArrayForAnswersPartIV;
 	}
 
-	public TestBackingBean getTestBean() {
-		return testBean;
+	public ExamBackingBean getexamBean() {
+		return examBean;
 	}
 
-	public void setTestBean(TestBackingBean testBean) {
-		this.testBean = testBean;
+	public void setexamBean(ExamBackingBean examBean) {
+		this.examBean = examBean;
 	}
 
 	public String getUserEmailPreserved() {
@@ -232,17 +233,17 @@ public class UserEntryBackingBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserEntryBackingBean [testBean=" + testBean
+		return "UserEntryBackingBean [examBean=" + examBean
 				+ ", userEmailPreserved=" + userEmailPreserved
 				+ ", userNamePreserved=" + userNamePreserved + ", todayDate="
-				+ todayDate + ", testDoubleArrayForAnswersPartI="
-				+ Arrays.toString(testDoubleArrayForAnswersPartI)
-				+ ", testDoubleArrayForAnswersPartII="
-				+ Arrays.toString(testDoubleArrayForAnswersPartII)
-				+ ", testDoubleArrayForAnswersPartIII="
-				+ Arrays.toString(testDoubleArrayForAnswersPartIII)
-				+ ", testDoubleArrayForAnswersPartIV="
-				+ Arrays.toString(testDoubleArrayForAnswersPartIV) + "]";
+				+ todayDate + ", examDoubleArrayForAnswersPartI="
+				+ Arrays.toString(examDoubleArrayForAnswersPartI)
+				+ ", examDoubleArrayForAnswersPartII="
+				+ Arrays.toString(examDoubleArrayForAnswersPartII)
+				+ ", examDoubleArrayForAnswersPartIII="
+				+ Arrays.toString(examDoubleArrayForAnswersPartIII)
+				+ ", examDoubleArrayForAnswersPartIV="
+				+ Arrays.toString(examDoubleArrayForAnswersPartIV) + "]";
 	}
 
 	@Override
@@ -250,15 +251,15 @@ public class UserEntryBackingBean implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((testBean == null) ? 0 : testBean.hashCode());
+				+ ((examBean == null) ? 0 : examBean.hashCode());
 		result = prime * result
-				+ Arrays.hashCode(testDoubleArrayForAnswersPartI);
+				+ Arrays.hashCode(examDoubleArrayForAnswersPartI);
 		result = prime * result
-				+ Arrays.hashCode(testDoubleArrayForAnswersPartII);
+				+ Arrays.hashCode(examDoubleArrayForAnswersPartII);
 		result = prime * result
-				+ Arrays.hashCode(testDoubleArrayForAnswersPartIII);
+				+ Arrays.hashCode(examDoubleArrayForAnswersPartIII);
 		result = prime * result
-				+ Arrays.hashCode(testDoubleArrayForAnswersPartIV);
+				+ Arrays.hashCode(examDoubleArrayForAnswersPartIV);
 		result = prime * result
 				+ ((todayDate == null) ? 0 : todayDate.hashCode());
 		result = prime
@@ -281,22 +282,22 @@ public class UserEntryBackingBean implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UserEntryBackingBean other = (UserEntryBackingBean) obj;
-		if (testBean == null) {
-			if (other.testBean != null)
+		if (examBean == null) {
+			if (other.examBean != null)
 				return false;
-		} else if (!testBean.equals(other.testBean))
+		} else if (!examBean.equals(other.examBean))
 			return false;
-		if (!Arrays.deepEquals(testDoubleArrayForAnswersPartI,
-				other.testDoubleArrayForAnswersPartI))
+		if (!Arrays.deepEquals(examDoubleArrayForAnswersPartI,
+				other.examDoubleArrayForAnswersPartI))
 			return false;
-		if (!Arrays.deepEquals(testDoubleArrayForAnswersPartII,
-				other.testDoubleArrayForAnswersPartII))
+		if (!Arrays.deepEquals(examDoubleArrayForAnswersPartII,
+				other.examDoubleArrayForAnswersPartII))
 			return false;
-		if (!Arrays.deepEquals(testDoubleArrayForAnswersPartIII,
-				other.testDoubleArrayForAnswersPartIII))
+		if (!Arrays.deepEquals(examDoubleArrayForAnswersPartIII,
+				other.examDoubleArrayForAnswersPartIII))
 			return false;
-		if (!Arrays.deepEquals(testDoubleArrayForAnswersPartIV,
-				other.testDoubleArrayForAnswersPartIV))
+		if (!Arrays.deepEquals(examDoubleArrayForAnswersPartIV,
+				other.examDoubleArrayForAnswersPartIV))
 			return false;
 		if (todayDate == null) {
 			if (other.todayDate != null)
