@@ -15,8 +15,8 @@ public enum QuestionEnums implements Serializable {
 	P1_QA("P1_QA", "What password do I use to initially sign on to BOE?"),
 	P1_QB("P1_QB", "Where do I enter the Oracle database logon?"),
 	P1_QC("P1_QC", "What password do I provide to connect to the Oracle database and schedule a report?"),
-	P1_QD("P1_QD", "Can BOE or ERT reset or update my Novell or Oracle passwords?"),
-	P1_QE("P1_QE", "Can BOE make my Novell and Oracle passwords the same?"),
+	P1_QD("P1_QD", "Can BOE change my WindowsAD/Novell password?"),
+//	P1_QE("P1_QE", "Can BOE make my Novell and Oracle passwords the same?"),
 
 	//ENUM OBJECTS FOR ALL QUESTIONS: Part II
 	P2_QA("P2_QA", "How do I schedule a report?"),
@@ -28,7 +28,9 @@ public enum QuestionEnums implements Serializable {
 	//ENUM OBJECTS FOR ALL QUESTIONS: Part III
 	P3_QA("P3_QA", "Can I change the format of a report?"),
 	P3_QB("P3_QB", "Can I schedule a report to email it to myself or others?"),
-	P3_QC("P3_QC", "Do I need to have a Crystal Report License to use BOE"),
+	P3_QC("P3_QC", "What is the best alternative to the Crystal Reports Format that preserves the most features?"),
+	P3_QD("P3_QD", "What is the most used report format?"),
+	P3_QE("P3_QE", "Where are all my BOE report shortcuts saved?"),
 	
 	//ENUM OBJECTS FOR ALL QUESTIONS: Part IV
 	P4_QA("P4_QA", "How do I find why my report failed?"),
